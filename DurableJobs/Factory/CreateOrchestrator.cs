@@ -1,4 +1,5 @@
 ﻿using DurableJobs.Factory.Models;
+using DurableJobs.Functions;
 using DurableJobs.Functions.Models;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using System;
@@ -12,9 +13,9 @@ namespace DurableJobs.Factory
     {
         public ActionType actionType => ActionType.New;
 
-        public Task Execute(DurableFunctionState state, IDurableOrchestrationContext context)
+        public async Task Execute(DurableFunctionState state, IDurableOrchestrationContext context)
         {
-            throw new NotImplementedException();
+            var response = await context.CallActivityAsync<DurableFunctionState>(nameof(CreateActivity), state);
         }
     }
 }

@@ -2,6 +2,7 @@
 using DurableJobs.Factory;
 using DurableJobs.Factory.Models;
 using DurableJobs.Functions.Models;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,12 +16,13 @@ namespace DurableJobs.Functions
     {
         private readonly ILogger<Orchestrator> _logger;
         private readonly IFactory _factory;
-        public Orchestrator(ILogger<Orchestrator> logger, IFactory factory)
+        public Orchestrator(IFactory factory,ILogger<Orchestrator> logger )
         {
             _logger = logger;
             _factory = factory;
         }
 
+        [FunctionName(nameof(Orchestrator))]
         public async Task<bool> Run([OrchestrationTrigger] IDurableOrchestrationContext context)
         {
             var message = context.GetInput<SBQueueMessage>();

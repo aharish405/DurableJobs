@@ -24,7 +24,7 @@ namespace DurableJobs
                 config.AddDurableTask(options =>
                 {
                     options.HubName = "JobHub";
-                    options.StorageProvider["ConnectionStringName"] = "AzureStorage";
+                    //options.StorageProvider["ConnectionStringName"] = "AzureStorage";
                 });
             });
             builder.ConfigureLogging((context, b) =>
@@ -41,7 +41,7 @@ namespace DurableJobs
             {
                 services.AddTransient<IOrchestrator, CreateOrchestrator>()
                 .AddTransient<IOrchestrator, UpdateOrchestrator>()
-                .AddTransient<IFactory,Factory>();
+                .AddTransient<IFactory, Factory.Factory>();
             });
 
             var host=builder.Build();
